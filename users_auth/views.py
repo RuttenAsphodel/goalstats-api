@@ -9,7 +9,7 @@ from .permissions import IsSuperAdmin, IsAdmin, IsCoach
 
 # Vistas de Administrador
 class RegisterView(APIView):
-    permission_classes = [IsAdmin]
+    permission_classes = []
 
     def post(self, request):
         serializer = UserSerializer(data=request.data)
