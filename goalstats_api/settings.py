@@ -155,6 +155,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ORIGIN_ALLOW_ALL = True
 CSRF_TRUSTED_ORIGINS = [
         'http://localhost:3000',
+        'https://web-07jwwegjko2e.up-de-fra1-k8s-1.apps.run-on-seenode.com/',
+        'https://gray-sky-023e5dd10.5.azurestaticapps.net'
     ]
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
