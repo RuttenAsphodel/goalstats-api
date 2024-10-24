@@ -1,10 +1,11 @@
+from rest_framework import viewsets
 from rest_framework import status, generics
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer
-from .models import CustomUser
+from .serializers import UserSerializer, DisciplineSerializer # AthleteSerializer
+from .models import CustomUser, Discipline #, Athlete
 from .permissions import IsSuperAdmin, IsAdmin, IsCoach
 
 # Vistas de Administrador
@@ -21,14 +22,14 @@ class RegisterView(APIView):
 
 class LoginView(APIView):
     permission_classes = []
-
+    # Dar informacion del rol del usuario que esta iniciando sesion
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
         user = authenticate(username=username, password=password)
         if user:
             token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key, 'user': UserSerializer(user).data})
+            return Response({'token': token.key, 'user': UserSerializer(user).data}) 
         return Response({'error': 'Invalid Credentials'}, status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutView(APIView):
@@ -78,3 +79,26 @@ class CoachPlayerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.filter(role='PLAYER')
     serializer_class = UserSerializer
     permission_classes = [IsCoach]
+    
+
+
+# Vistas de Disciplinas
+class DisciplineViewSet(viewsets.ModelViewSet):
+    queryset = Discipline.objects.all()
+    serializer_class = DisciplineSerializer
+    permission_classes = []
+
+# Vistas de Atletas
+# class AthleteViewSet(viewsets.ModelViewSet):
+#     queryset = Athlete.objects.all()
+#     serializer_class = AthleteSerializer
+#     permission_classes = []
+
+#     def perform_create(self, serializer):
+#         user = CustomUser.objects.create_user(
+#             username=self.request.data.get('username'),
+#             password=self.request.data.get('password'),
+#             email=self.request.data.get('email'),
+#             role='PLAYER'
+#         )
+#         serializer.save(user=user)
