@@ -40,16 +40,16 @@ class LogoutView(APIView):
 class UserListView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdmin]
+    permission_classes = []
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [IsAdmin]
+    permission_classes = []
     
 # Vistas de Superadministrador
 class SuperAdminDashboardView(APIView):
-    permission_classes = [IsSuperAdmin]
+    permission_classes = []
 
     def get(self, request):
         total_users = CustomUser.objects.count()
@@ -67,7 +67,7 @@ class SuperAdminDashboardView(APIView):
 # Vistas de Entrenador
 class CoachPlayersView(generics.ListCreateAPIView):
     serializer_class = UserSerializer
-    permission_classes = [IsCoach]
+    permission_classes = []
 
     def get_queryset(self):
         return CustomUser.objects.filter(role='PLAYER')
@@ -78,7 +78,7 @@ class CoachPlayersView(generics.ListCreateAPIView):
 class CoachPlayerDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.filter(role='PLAYER')
     serializer_class = UserSerializer
-    permission_classes = [IsCoach]
+    permission_classes = []
     
 
 
