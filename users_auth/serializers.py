@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from .models import CustomUser, Discipline #, Athlete
 
@@ -6,13 +7,21 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CustomUser
-        fields = ('id', 'username', 'email', 'password', 'role')
+        fields = ('id', 'username', 'email', 'password', 'role', 'is_active')
 
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
-    
 
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'username','role', 'is_active', 'nombre', 'apellido', 'fecha_nacimiento', 'peso', 'estatura', 'nombre_disciplina']
+    
+class UpdateCustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['role', 'is_active', 'nombre', 'apellido', 'fecha_nacimiento', 'peso', 'estatura', 'nombre_disciplina']
 
 class DisciplineSerializer(serializers.ModelSerializer):
     class Meta:

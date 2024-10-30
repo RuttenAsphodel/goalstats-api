@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+from django.utils.timezone import datetime
 class CustomUser(AbstractUser):
     ROLES = (
         ('SUPER_ADMIN', 'Super Administrador'),
@@ -9,7 +9,15 @@ class CustomUser(AbstractUser):
         ('PLAYER', 'Jugador'),
     )
     role = models.CharField(max_length=20, choices=ROLES, default='PLAYER')
-    
+
+    is_active = models.BooleanField(default=True)
+    nombre  = models.CharField(max_length=120, verbose_name="Nombre", blank=True)
+    apellido = models.CharField(max_length=120, verbose_name="Apellidos", blank=True)
+    fecha_nacimiento = models.DateField(default=datetime.now())
+    peso = models.FloatField(help_text="Peso en Kilogramos", null=True)
+    estatura = models.FloatField(help_text="Estatura en Centimetros", null=True)
+    nombre_disciplina = models.ForeignKey("Discipline",on_delete=models.CASCADE, related_name='customuser', default=1, blank=True)
+        
 # Hacer despliegue con las disciplinas antes del 25-10-2024    
 class Discipline(models.Model):
     nombre_disciplina = models.CharField(max_length=100, verbose_name='Disciplina',default='')

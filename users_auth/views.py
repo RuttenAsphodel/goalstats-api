@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer, DisciplineSerializer # AthleteSerializer
+from .serializers import UserSerializer, DisciplineSerializer, UpdateCustomUserSerializer, UserListSerializer # AthleteSerializer
 from .models import CustomUser, Discipline #, Athlete
 from .permissions import IsSuperAdmin, IsAdmin, IsCoach
 
@@ -39,14 +39,22 @@ class LogoutView(APIView):
 
 class UserListView(generics.ListAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserListSerializer
     permission_classes = []
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = []
+
+class UpdateUserView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = CustomUser.objects.all()
+    permission_classes = []
     
+    def get_serializer_class(self):
+        if self.request.method in ['PUT', 'PATCH']:
+            return UpdateCustomUserSerializer
+        return UserSerializer    
 # Vistas de Superadministrador
 class SuperAdminDashboardView(APIView):
     permission_classes = []
