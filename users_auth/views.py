@@ -44,7 +44,7 @@ class UserListView(generics.ListAPIView):
 
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = CustomUser.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserListSerializer
     permission_classes = []
 
 class UpdateUserView(generics.RetrieveUpdateDestroyAPIView):
@@ -54,7 +54,7 @@ class UpdateUserView(generics.RetrieveUpdateDestroyAPIView):
     def get_serializer_class(self):
         if self.request.method in ['PUT', 'PATCH']:
             return UpdateCustomUserSerializer
-        return UserSerializer    
+        return UserListSerializer    
 # Vistas de Superadministrador
 class SuperAdminDashboardView(APIView):
     permission_classes = []
