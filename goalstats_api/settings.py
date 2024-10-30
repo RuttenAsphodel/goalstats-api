@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_txpq!8&u%d$dgwww1bvmzc*&#5a)jqg5_+)eq#rm$lyvpxx5m
 DEBUG = False
 
 
-ALLOWED_HOSTS = ['*', 'https://white-mud-0ccc6d40f.5.azurestaticapps.net/']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -57,6 +57,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users_auth.CustomUser'
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -64,7 +65,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    
     'whitenoise.middleware.WhiteNoiseMiddleware',
 
 ]
