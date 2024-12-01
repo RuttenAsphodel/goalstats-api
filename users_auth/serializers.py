@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from .models import CustomUser, Discipline #, Athlete
+from .models import CustomUser, Discipline, PerformanceMetric #, Athlete
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
@@ -28,10 +28,11 @@ class DisciplineSerializer(serializers.ModelSerializer):
         model = Discipline
         fields = '__all__'
 
-# class AthleteSerializer(serializers.ModelSerializer):
-#     user = UserSerializer(read_only=True)
-#     disciplinas = DisciplineSerializer(many=True, read_only=True)
+class PerformanceMetricSerializer(serializers.ModelSerializer):
+    athlete_name = serializers.CharField(source='CustomUser.username', read_only=True)
+    sport_name = serializers.CharField(source='Discipline.nombre_disciplina', read_only=True)
 
-#     class Meta:
-#         model = Athlete
-#         fields = '__all__'
+    class Meta:
+        model = PerformanceMetric
+        fields = '__all__'
+        read_only_fields = ['suggested_position', 'performance_score']

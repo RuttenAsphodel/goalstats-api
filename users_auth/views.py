@@ -4,8 +4,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
-from .serializers import UserSerializer, DisciplineSerializer, UpdateCustomUserSerializer, UserListSerializer # AthleteSerializer
-from .models import CustomUser, Discipline #, Athlete
+from .serializers import UserSerializer, DisciplineSerializer, UpdateCustomUserSerializer, UserListSerializer, PerformanceMetricSerializer # AthleteSerializer
+from .models import CustomUser, Discipline, PerformanceMetric #, Athlete
 from .permissions import IsSuperAdmin, IsAdmin, IsCoach
 
 # Vistas de Administrador
@@ -96,6 +96,23 @@ class DisciplineViewSet(viewsets.ModelViewSet):
     serializer_class = DisciplineSerializer
     permission_classes = []
 
+# Vistas de Rendimientos de Jugadores
+class PerformanceMetricViewSet(viewsets.ModelViewSet):
+    queryset = PerformanceMetric.objects.all()
+    serializer_class = PerformanceMetricSerializer
+    permission_classes = []
+    
+    def perform_create(self, serializer):
+        metric = serializer.save()
+        metric.calculate_performance_score()
+        metric.determine_optimal_position()
+    
+    # def get_queryset(self):
+    #     user = self.request.user
+    #     if user.is_superuser:
+    #         return PerformanceMetric.objects.all()
+    #     return PerformanceMetric.objects.filter(athlete=user)
+    
 # Vistas de Atletas
 # class AthleteViewSet(viewsets.ModelViewSet):
 #     queryset = Athlete.objects.all()

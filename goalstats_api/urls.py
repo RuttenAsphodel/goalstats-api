@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from users_auth.views import RegisterView, LoginView, LogoutView, UserListView, UserDetailView, UpdateUserView,SuperAdminDashboardView, CoachPlayersView, CoachPlayerDetailView, DisciplineViewSet #, AthleteViewSet
+from users_auth.views import RegisterView, LoginView, LogoutView, UserListView, UpdateUserView,SuperAdminDashboardView, CoachPlayersView, CoachPlayerDetailView, DisciplineViewSet, PerformanceMetricViewSet #, AthleteViewSet
 
 router = DefaultRouter()
 router.register(r'disciplines', DisciplineViewSet, basename="disciplines")
+router.register(r'performance-metrics', PerformanceMetricViewSet)
+
 # router.register(r'athletes', AthleteViewSet, basename="athletes")
 
 urlpatterns = [
