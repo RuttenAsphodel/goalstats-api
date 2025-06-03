@@ -104,10 +104,10 @@ WSGI_APPLICATION = 'goalstats_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bgdeyfk0vexw223r9cmn',
+        'NAME': 'bvebwmvyiicuepvdskpg',
         'USER': 'usfgwtgqwl84nt29',
         'PASSWORD': 'vDgTnwEGH19Py1NNRklC',
-        'HOST': 'bgdeyfk0vexw223r9cmn-mysql.services.clever-cloud.com',  # Ruta al archivo socket Unix
+        'HOST': 'bvebwmvyiicuepvdskpg-mysql.services.clever-cloud.com',  # Ruta al archivo socket Unix
         'OPTIONS': {
         },
         'PORT':'3306'
